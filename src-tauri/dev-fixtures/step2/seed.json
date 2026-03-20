@@ -1,0 +1,55 @@
+{
+  "fixtureVersion": "step2_v1",
+  "latestTradeDate": "2026-03-18",
+  "lastSyncAt": "2026-03-19T09:30:00+08:00",
+  "barCount": 780,
+  "indexes": [
+    { "targetId": "DJI", "displayCode": "DJI", "name": "道琼斯", "market": "US", "securityType": "index", "currency": "USD", "totalShares": null, "circulatingShares": null, "priceSeed": 38120.0, "trend": 140.0, "volatility": 180.0 },
+    { "targetId": "IXIC", "displayCode": "IXIC", "name": "纳斯达克", "market": "US", "securityType": "index", "currency": "USD", "totalShares": null, "circulatingShares": null, "priceSeed": 16520.0, "trend": 82.0, "volatility": 120.0 },
+    { "targetId": "GSPC", "displayCode": "GSPC", "name": "标普500", "market": "US", "securityType": "index", "currency": "USD", "totalShares": null, "circulatingShares": null, "priceSeed": 5220.0, "trend": 20.0, "volatility": 45.0 },
+    { "targetId": "RUT", "displayCode": "RUT", "name": "罗素2000", "market": "US", "securityType": "index", "currency": "USD", "totalShares": null, "circulatingShares": null, "priceSeed": 2080.0, "trend": 8.0, "volatility": 22.0 }
+  ],
+  "symbols": [
+    { "targetId": "NVDA", "displayCode": "NVDA", "name": "NVIDIA", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 24600.0, "circulatingShares": 24200.0, "priceSeed": 118.0, "trend": 1.8, "volatility": 5.2 },
+    { "targetId": "AMD", "displayCode": "AMD", "name": "AMD", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 16200.0, "circulatingShares": 16050.0, "priceSeed": 92.0, "trend": 1.2, "volatility": 4.4 },
+    { "targetId": "AVGO", "displayCode": "AVGO", "name": "Broadcom", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 4700.0, "circulatingShares": 4650.0, "priceSeed": 132.0, "trend": 1.6, "volatility": 4.8 },
+    { "targetId": "SIM01", "displayCode": "SIM01", "name": "Simulated Equity 01", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1180.0, "circulatingShares": 1160.0, "priceSeed": 41.0, "trend": 0.5, "volatility": 2.1 },
+    { "targetId": "SIM02", "displayCode": "SIM02", "name": "Simulated Equity 02", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1240.0, "circulatingShares": 1220.0, "priceSeed": 44.0, "trend": 0.55, "volatility": 2.2 },
+    { "targetId": "SIM03", "displayCode": "SIM03", "name": "Simulated Equity 03", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1300.0, "circulatingShares": 1270.0, "priceSeed": 47.0, "trend": 0.6, "volatility": 2.2 },
+    { "targetId": "SIM04", "displayCode": "SIM04", "name": "Simulated Equity 04", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1360.0, "circulatingShares": 1330.0, "priceSeed": 49.0, "trend": 0.62, "volatility": 2.3 },
+    { "targetId": "SIM05", "displayCode": "SIM05", "name": "Simulated Equity 05", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1420.0, "circulatingShares": 1390.0, "priceSeed": 51.0, "trend": 0.64, "volatility": 2.4 },
+    { "targetId": "SIM06", "displayCode": "SIM06", "name": "Simulated Equity 06", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1480.0, "circulatingShares": 1450.0, "priceSeed": 53.0, "trend": 0.66, "volatility": 2.4 },
+    { "targetId": "SIM07", "displayCode": "SIM07", "name": "Simulated Equity 07", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1540.0, "circulatingShares": 1510.0, "priceSeed": 55.0, "trend": 0.68, "volatility": 2.5 },
+    { "targetId": "SIM08", "displayCode": "SIM08", "name": "Simulated Equity 08", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1600.0, "circulatingShares": 1570.0, "priceSeed": 58.0, "trend": 0.7, "volatility": 2.5 },
+    { "targetId": "SIM09", "displayCode": "SIM09", "name": "Simulated Equity 09", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1660.0, "circulatingShares": 1630.0, "priceSeed": 61.0, "trend": 0.72, "volatility": 2.6 },
+    { "targetId": "SIM10", "displayCode": "SIM10", "name": "Simulated Equity 10", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1720.0, "circulatingShares": 1690.0, "priceSeed": 63.0, "trend": 0.74, "volatility": 2.6 },
+    { "targetId": "SIM11", "displayCode": "SIM11", "name": "Simulated Equity 11", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1780.0, "circulatingShares": 1750.0, "priceSeed": 65.0, "trend": 0.76, "volatility": 2.7 },
+    { "targetId": "SIM12", "displayCode": "SIM12", "name": "Simulated Equity 12", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1840.0, "circulatingShares": 1810.0, "priceSeed": 67.0, "trend": 0.78, "volatility": 2.7 },
+    { "targetId": "SIM13", "displayCode": "SIM13", "name": "Simulated Equity 13", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1900.0, "circulatingShares": 1870.0, "priceSeed": 69.0, "trend": 0.8, "volatility": 2.8 },
+    { "targetId": "SIM14", "displayCode": "SIM14", "name": "Simulated Equity 14", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 1960.0, "circulatingShares": 1930.0, "priceSeed": 71.0, "trend": 0.82, "volatility": 2.8 },
+    { "targetId": "SIM15", "displayCode": "SIM15", "name": "Simulated Equity 15", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2020.0, "circulatingShares": 1990.0, "priceSeed": 73.0, "trend": 0.84, "volatility": 2.9 },
+    { "targetId": "SIM16", "displayCode": "SIM16", "name": "Simulated Equity 16", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2080.0, "circulatingShares": 2050.0, "priceSeed": 75.0, "trend": 0.86, "volatility": 2.9 },
+    { "targetId": "SIM17", "displayCode": "SIM17", "name": "Simulated Equity 17", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2140.0, "circulatingShares": 2110.0, "priceSeed": 77.0, "trend": 0.88, "volatility": 3.0 },
+    { "targetId": "SIM18", "displayCode": "SIM18", "name": "Simulated Equity 18", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2200.0, "circulatingShares": 2170.0, "priceSeed": 79.0, "trend": 0.9, "volatility": 3.0 },
+    { "targetId": "SIM19", "displayCode": "SIM19", "name": "Simulated Equity 19", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2260.0, "circulatingShares": 2230.0, "priceSeed": 81.0, "trend": 0.92, "volatility": 3.1 },
+    { "targetId": "SIM20", "displayCode": "SIM20", "name": "Simulated Equity 20", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2320.0, "circulatingShares": 2290.0, "priceSeed": 83.0, "trend": 0.94, "volatility": 3.1 },
+    { "targetId": "SIM21", "displayCode": "SIM21", "name": "Simulated Equity 21", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 2380.0, "circulatingShares": 2350.0, "priceSeed": 85.0, "trend": 0.96, "volatility": 3.2 },
+    { "targetId": "EMPTY1", "displayCode": "EMPTY1", "name": "Empty Fixture Symbol", "market": "US", "securityType": "stock", "currency": "USD", "totalShares": 980.0, "circulatingShares": 950.0, "priceSeed": 25.0, "trend": 0.2, "volatility": 1.5, "skipBars": true }
+  ],
+  "boards": [
+    {
+      "boardId": "board-ai",
+      "name": "AI半导体",
+      "sortOrder": 1,
+      "compositionAlgorithm": "equal_weight_v1",
+      "members": ["NVDA", "AMD", "AVGO"]
+    }
+  ],
+  "notes": [
+    {
+      "targetType": "board",
+      "targetId": "board-ai",
+      "content": "Capture board thesis and monitoring notes here."
+    }
+  ]
+}

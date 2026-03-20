@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>new_stock</title>
+    <script>
+      (() => {
+        const windowName = 'main';
+        const root = (window.__NEW_STOCK_BOOT__ = window.__NEW_STOCK_BOOT__ ?? {});
+        const mark = (name, stage, detail) => {
+          const payload = {
+            windowName: name,
+            stage,
+            detail: detail ?? null,
+            timestamp: new Date().toISOString(),
+          };
+          root[name] = payload;
+          document.documentElement.dataset.bootWindow = name;
+          document.documentElement.dataset.bootStage = stage;
+          console.info(`[boot:${name}] ${stage}`, detail ?? '');
+        };
+
+        window.__NEW_STOCK_MARK_BOOT__ = mark;
+        window.addEventListener('error', (event) => {
+          console.error(`[boot:${windowName}] window.error`, {
+            message: event.message,
+            filename: event.filename,
+            lineno: event.lineno,
+            colno: event.colno,
+            stack: event.error?.stack,
+          });
+        });
+        window.addEventListener('unhandledrejection', (event) => {
+          console.error(`[boot:${windowName}] unhandledrejection`, event.reason);
+        });
+        mark(windowName, 'html-entry');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

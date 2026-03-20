@@ -1,0 +1,30 @@
+:root {
+  --bg-app: #f3f4f7;
+  --bg-surface: #fcfcfd;
+  --bg-sidebar: #f5f6f9;
+  --bg-sidebar-alt: #f7f8fb;
+  --bg-control: #f4f6f9;
+  --bg-selection: #eaf2ff;
+  --text-primary: #1f2430;
+  --text-secondary: #697385;
+  --text-tertiary: #7c8697;
+  --line-subtle: #e6e8ee;
+  --line-soft: #eff2f6;
+  --line-strong: #dde2ea;
+  --accent-blue: #7fa8f3;
+  --accent-blue-line: #c9daff;
+  --chart-up: #2f8f6a;
+  --chart-down: #c84d5f;
+  --toolbar-height: 52px;
+  --index-height: 44px;
+  --status-height: 36px;
+  --boards-width: 132px;
+  --members-width: 188px;
+  --main-min-width: 860px;
+  --radius-large: 16px;
+  --radius-medium: 14px;
+  --radius-small: 10px;
+  font-family: 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-app);
+}
