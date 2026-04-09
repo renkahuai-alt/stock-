@@ -3408,6 +3408,7 @@ dependencies = [
  "chrono-tz",
  "dirs",
  "keyring",
+ "keyring-core",
  "longbridge",
  "rusqlite",
  "serde",

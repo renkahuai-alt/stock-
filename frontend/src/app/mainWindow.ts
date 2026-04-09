@@ -15,10 +15,11 @@ import { applyBoardBuildStatus } from '../stores/appStore';
 import { upsertBoardBuildStatus } from '../stores/boardBuildStore';
 import {
   handleBoardBuildStatusEvent,
+  handleSyncStatusEvent,
   refreshBootstrapCatalogState,
   syncBootstrapState,
 } from '../services/mainFlow';
-import { setSyncStatus, setSyncStatusFailure } from '../stores/syncStore';
+import { setSyncStatusFailure } from '../stores/syncStore';
 import { registerWindowCleanup, resolveMountTarget } from './shared';
 
 let initialized = false;
@@ -63,7 +64,14 @@ async function initializeMainWindow(): Promise<void> {
 
   try {
     const unlisten = await registerCoreListeners({
-      onSyncStatus: (payload) => setSyncStatus(payload),
+      onSyncStatus: (payload) => {
+        void handleSyncStatusEvent(payload).catch((error) => {
+          recordRuntimeSignal('window.main.sync-status-handle-failed', {
+            error: serializeError(error),
+          });
+          setSyncStatusFailure(`同步结果刷新失败：${formatErrorMessage(error, '未知错误')}`);
+        });
+      },
       onBoardBuildStatus: (payload) => {
         applyBoardBuildStatus(payload);
         upsertBoardBuildStatus(payload);

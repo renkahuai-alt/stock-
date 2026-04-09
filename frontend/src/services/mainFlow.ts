@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import type { BoardAlgorithm, BoardBuildStatusPayload, BoardSummary } from '../types/contracts';
+import type { BoardAlgorithm, BoardBuildStatusPayload, BoardSummary, SyncStatusPayload } from '../types/contracts';
 import { bootstrap, getBoardBuildStatus, getBoardMemberSummaries, openSettingsWindow } from './commands';
 import { scheduleChartWatchReconcile } from './chartWatchFlow';
 import { formatErrorMessage } from './errors';
@@ -37,7 +37,13 @@ import {
   toGetChartRequest,
 } from '../stores/selectionStore';
 import { syncSettingsBoard } from '../stores/settingsStore';
-import { refreshSyncStatus, setSyncStatus, setSyncStatusFailure, triggerSync } from '../stores/syncStore';
+import {
+  refreshSyncStatus,
+  setSyncStatus,
+  setSyncStatusFailure,
+  syncStore,
+  triggerSync,
+} from '../stores/syncStore';
 
 export async function syncBootstrapState(): Promise<void> {
   recordRuntimeSignal('main-flow.bootstrap-sync-requested');
@@ -66,6 +72,17 @@ export async function syncBootstrapState(): Promise<void> {
     activeTargetType: payload.activeTargetNote.targetType,
     activeTargetId: payload.activeTargetNote.targetId,
   });
+}
+
+export async function handleSyncStatusEvent(payload: SyncStatusPayload): Promise<void> {
+  const previous = get(syncStore);
+  setSyncStatus(payload);
+
+  if (!shouldRefreshChartAfterSync(previous, payload)) {
+    return;
+  }
+
+  await syncSelectionChartState();
 }
 
 export async function refreshBootstrapCatalogState(): Promise<void> {
@@ -365,4 +382,20 @@ function matchesBoardBuildPayload(
     && current.updatedAt === incoming.updatedAt
     && (current.buildJobId ?? '') === (incoming.buildJobId ?? '')
   );
+}
+
+function shouldRefreshChartAfterSync(previous: SyncStatusPayload, next: SyncStatusPayload): boolean {
+  if (next.status === 'first_sync_running' || next.status === 'incremental_sync_running') {
+    return false;
+  }
+
+  if (previous.lastSyncAt !== next.lastSyncAt) {
+    return true;
+  }
+
+  if (previous.latestTradeDate !== next.latestTradeDate) {
+    return true;
+  }
+
+  return previous.status !== next.status && next.status === 'ready';
 }

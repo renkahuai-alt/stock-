@@ -1,6 +1,6 @@
 use std::sync::OnceLock;
 
-use keyring::{Entry, Error as KeyringError};
+use keyring_core::{Entry, Error as KeyringError};
 
 use crate::errors::{AppError, AppResult};
 use crate::models::SaveCredentialsPayload;
@@ -15,7 +15,7 @@ fn ensure_native_store() -> AppResult<()> {
         .as_ref()
         .map_err(|error| {
             AppError::Message(format!(
-                "failed to initialize Windows credential store: {error}"
+                "failed to initialize secure credential store: {error}"
             ))
         })?;
 
@@ -30,18 +30,36 @@ fn entry() -> AppResult<Entry> {
 
 pub fn save_credentials(payload: &SaveCredentialsPayload) -> AppResult<()> {
     let serialized = serde_json::to_string(payload)?;
-    entry()?
+    let entry = entry()?;
+    entry
         .set_password(&serialized)
-        .map_err(|error| AppError::Message(format!("failed to save Windows credentials: {error}")))
+        .map_err(|error| AppError::Message(format!("failed to save credentials: {error}")))?;
+
+    let roundtrip = match entry.get_password() {
+        Ok(value) => value,
+        Err(error) => {
+            return Err(AppError::Message(format!(
+                "credentials were saved but could not be read back: {error}"
+            )))
+        }
+    };
+
+    if roundtrip != serialized {
+        return Err(AppError::Message(
+            "credentials roundtrip verification failed after save".into(),
+        ));
+    }
+
+    Ok(())
 }
 
 pub fn load_credentials() -> AppResult<Option<SaveCredentialsPayload>> {
-    let raw = match entry()?.get_password() {
+    let raw: String = match entry()?.get_password() {
         Ok(value) => value,
         Err(KeyringError::NoEntry) => return Ok(None),
         Err(error) => {
             return Err(AppError::Message(format!(
-                "failed to read Windows credentials: {error}"
+                "failed to read stored credentials: {error}"
             )))
         }
     };

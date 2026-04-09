@@ -30,10 +30,22 @@ pub fn save_credentials(
     payload: SaveCredentialsPayload,
 ) -> Result<SimpleStatusPayload, AppError> {
     secret_store::save_credentials(&payload)?;
-    state.runtime.reset_provider();
-    state.runtime.spawn_provider_prewarm();
+    let runtime = state.runtime.clone();
+    runtime.reset_provider();
+    runtime.spawn_provider_prewarm();
     app.emit(events::SETTINGS_SAVED, ())
         .map_err(AppError::from)?;
+    let sync_app = app.clone();
+    tauri::async_runtime::spawn(async move {
+        match SyncService::new(Database::new(), runtime).run("manual").await {
+            Ok(payload) => {
+                let _ = sync_app.emit(events::SYNC_STATUS, payload);
+            }
+            Err(error) => {
+                eprintln!("[save_credentials] background sync failed error={error}");
+            }
+        }
+    });
     Ok(SimpleStatusPayload::saved())
 }
 
