@@ -17,6 +17,8 @@ use crate::models::{
 const FIXTURE_VERSION_KEY: &str = "dev_fixture_version";
 const FIXTURE_VERSION_VALUE: &str = "step2_v1";
 const BAR_ADJUSTMENT_POLICY_KEY: &str = "daily_bar_adjustment_policy";
+const APP_DATA_DIR_NAME: &str = "new_stock";
+const DATABASE_FILE_NAME: &str = "new_stock.sqlite3";
 
 const CORE_INDEXES: [(&str, &str, &str); 4] = [
     ("DJI", "DJI", "Dow Jones Industrial Average"),
@@ -67,9 +69,7 @@ impl Database {
         }
 
         Self {
-            path: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("dev-data")
-                .join("new_stock.sqlite3"),
+            path: default_database_path(),
         }
     }
 
@@ -84,6 +84,8 @@ impl Database {
     }
 
     pub fn bootstrap(&self) -> AppResult<()> {
+        self.migrate_legacy_database_if_needed()?;
+
         if let Some(parent) = self.path.parent() {
             fs::create_dir_all(parent)?;
         }
@@ -101,9 +103,37 @@ impl Database {
     }
 
     pub fn open_connection(&self) -> AppResult<Connection> {
+        self.migrate_legacy_database_if_needed()?;
+
+        if let Some(parent) = self.path.parent() {
+            fs::create_dir_all(parent)?;
+        }
+
         let conn = Connection::open(&self.path)?;
         Self::configure_connection(&conn)?;
         Ok(conn)
+    }
+
+    fn migrate_legacy_database_if_needed(&self) -> AppResult<()> {
+        let legacy = legacy_database_path();
+        if self.path == legacy || self.path.exists() || !legacy.exists() {
+            return Ok(());
+        }
+
+        if let Some(parent) = self.path.parent() {
+            fs::create_dir_all(parent)?;
+        }
+
+        fs::copy(&legacy, &self.path)?;
+
+        for suffix in ["-wal", "-shm"] {
+            let legacy_sidecar = sqlite_sidecar_path(&legacy, suffix);
+            if legacy_sidecar.exists() {
+                fs::copy(&legacy_sidecar, sqlite_sidecar_path(&self.path, suffix))?;
+            }
+        }
+
+        Ok(())
     }
 
     pub fn list_indexes(&self) -> AppResult<Vec<IndexItem>> {
@@ -1269,6 +1299,29 @@ impl Database {
     }
 }
 
+fn default_database_path() -> PathBuf {
+    let base = dirs::data_local_dir()
+        .or_else(dirs::data_dir)
+        .or_else(|| std::env::current_dir().ok())
+        .unwrap_or_else(|| PathBuf::from("."));
+
+    base.join(APP_DATA_DIR_NAME).join(DATABASE_FILE_NAME)
+}
+
+fn legacy_database_path() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("dev-data")
+        .join(DATABASE_FILE_NAME)
+}
+
+fn sqlite_sidecar_path(path: &Path, suffix: &str) -> PathBuf {
+    let file_name = path
+        .file_name()
+        .map(|value| value.to_string_lossy().to_string())
+        .unwrap_or_else(|| DATABASE_FILE_NAME.to_string());
+    path.with_file_name(format!("{file_name}{suffix}"))
+}
+
 fn dev_fixture_path() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("dev-fixtures")
@@ -1636,4 +1689,34 @@ pub fn now_string() -> String {
 
 fn round_to(value: f64) -> f64 {
     (value * 100.0).round() / 100.0
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_database_path_uses_user_data_directory_shape() {
+        let path = default_database_path();
+        let path_str = path.to_string_lossy();
+
+        assert!(
+            path_str.ends_with("new_stock/new_stock.sqlite3")
+                || path_str.ends_with("new_stock\\new_stock.sqlite3"),
+            "default path should live under a user data directory: {path_str}"
+        );
+        assert!(
+            !path_str.contains("src-tauri/dev-data"),
+            "release default path must not point at the source tree: {path_str}"
+        );
+    }
+
+    #[test]
+    fn sqlite_sidecar_path_appends_suffix_to_database_name() {
+        let path = PathBuf::from("/tmp/new_stock.sqlite3");
+        assert_eq!(
+            sqlite_sidecar_path(&path, "-wal"),
+            PathBuf::from("/tmp/new_stock.sqlite3-wal")
+        );
+    }
 }

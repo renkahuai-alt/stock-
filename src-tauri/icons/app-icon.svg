@@ -1,0 +1,64 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="140" y1="96" x2="890" y2="936" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#13283E"/>
+      <stop offset="0.55" stop-color="#173B60"/>
+      <stop offset="1" stop-color="#0C1B2C"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="252" y1="222" x2="786" y2="812" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F4FAFF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#9CC8EC" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="trend" x1="186" y1="646" x2="790" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#71D2FF"/>
+      <stop offset="0.55" stop-color="#9BE7F5"/>
+      <stop offset="1" stop-color="#7CE1B4"/>
+    </linearGradient>
+    <linearGradient id="greenBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#BFF7D6"/>
+      <stop offset="1" stop-color="#70D8A1"/>
+    </linearGradient>
+    <linearGradient id="lightBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8FCFF"/>
+      <stop offset="1" stop-color="#BFD5E7"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(274 214) rotate(47.6) scale(578 421)">
+      <stop offset="0" stop-color="#D6F3FF" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#D6F3FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="157" y="151" width="710" height="742" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="20"/>
+      <feGaussianBlur stdDeviation="18"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0156863 0 0 0 0 0.0627451 0 0 0 0 0.121569 0 0 0 0.28 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
+    </filter>
+  </defs>
+
+  <rect x="48" y="48" width="928" height="928" rx="224" fill="url(#bg)"/>
+  <rect x="48" y="48" width="928" height="928" rx="224" fill="url(#glow)"/>
+
+  <g filter="url(#softShadow)">
+    <rect x="188" y="182" width="648" height="660" rx="146" fill="url(#panel)"/>
+    <path d="M260 286H764" stroke="#D7EDFF" stroke-opacity="0.16" stroke-width="12" stroke-linecap="round"/>
+    <path d="M260 432H764" stroke="#D7EDFF" stroke-opacity="0.09" stroke-width="10" stroke-linecap="round"/>
+    <path d="M260 578H764" stroke="#D7EDFF" stroke-opacity="0.09" stroke-width="10" stroke-linecap="round"/>
+    <path d="M260 724H764" stroke="#D7EDFF" stroke-opacity="0.11" stroke-width="10" stroke-linecap="round"/>
+
+    <path d="M252 666C322 650 365 610 404 560C447 504 486 444 548 404C600 370 662 348 772 244" stroke="url(#trend)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <path d="M336 612V426" stroke="#C8DDF0" stroke-opacity="0.85" stroke-width="16" stroke-linecap="round"/>
+    <rect x="304" y="488" width="64" height="92" rx="24" fill="url(#lightBar)"/>
+
+    <path d="M514 560V320" stroke="#D3E8F7" stroke-opacity="0.88" stroke-width="16" stroke-linecap="round"/>
+    <rect x="482" y="396" width="64" height="136" rx="24" fill="url(#lightBar)"/>
+
+    <path d="M692 508V238" stroke="#A6F0C8" stroke-opacity="0.96" stroke-width="16" stroke-linecap="round"/>
+    <rect x="660" y="292" width="64" height="184" rx="24" fill="url(#greenBar)"/>
+
+    <path d="M748 266L790 230" stroke="#A9F2CA" stroke-width="20" stroke-linecap="round"/>
+    <path d="M748 214H790V256" stroke="#A9F2CA" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
