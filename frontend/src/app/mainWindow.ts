@@ -17,6 +17,7 @@ import {
   handleBoardBuildStatusEvent,
   handleSyncStatusEvent,
   refreshBootstrapCatalogState,
+  recoverStartupSyncResult,
   syncBootstrapState,
 } from '../services/mainFlow';
 import { setSyncStatusFailure } from '../stores/syncStore';
@@ -94,6 +95,8 @@ async function initializeMainWindow(): Promise<void> {
     const disposeWatchRuntime = await initializeMainWindowWatchRuntime();
     markBootStage('main', 'watch-runtime-ready');
     recordRuntimeSignal('window.main.watch-runtime-ready');
+    await recoverStartupSyncResult();
+    markBootStage('main', 'startup-sync-recovered');
 
     registerWindowCleanup(() => {
       unlisten.forEach((dispose) => dispose());

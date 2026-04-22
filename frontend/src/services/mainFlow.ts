@@ -85,6 +85,35 @@ export async function handleSyncStatusEvent(payload: SyncStatusPayload): Promise
   await syncSelectionChartState();
 }
 
+export async function recoverStartupSyncResult(): Promise<void> {
+  const previous = get(syncStore);
+
+  recordRuntimeSignal('main-flow.startup-sync-recover-requested', {
+    previousStatus: previous.status,
+    previousLastSyncAt: previous.lastSyncAt ?? null,
+    previousLatestTradeDate: previous.latestTradeDate ?? null,
+  });
+
+  await refreshSyncStatus();
+  const latest = get(syncStore);
+
+  if (!shouldRefreshChartAfterSync(previous, latest)) {
+    recordRuntimeSignal('main-flow.startup-sync-recover-skipped', {
+      status: latest.status,
+      lastSyncAt: latest.lastSyncAt ?? null,
+      latestTradeDate: latest.latestTradeDate ?? null,
+    });
+    return;
+  }
+
+  await syncSelectionChartState();
+  setRuntimeSnapshot('main-flow.startup-sync-recovered', {
+    status: latest.status,
+    lastSyncAt: latest.lastSyncAt ?? null,
+    latestTradeDate: latest.latestTradeDate ?? null,
+  });
+}
+
 export async function refreshBootstrapCatalogState(): Promise<void> {
   recordRuntimeSignal('main-flow.catalog-refresh-requested');
 
